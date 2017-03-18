@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.onemt.news.crawler.mysql.mapper.CrawlerArticleContentMapper" >
+  <resultMap id="BaseResultMap" type="com.onemt.news.crawler.mysql.entity.CrawlerArticleContent" >
+    <id column="articleId" property="articleId" jdbcType="BIGINT" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="textContent" property="textContent" jdbcType="LONGVARCHAR" />
+    <result column="htmlContent" property="htmlContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select articleId,description, content, textContent, htmlContent
+    from crawler_article_content
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from crawler_article_content
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleContent" >
+    insert into crawler_article (articleId, description, content, textContent, htmlContent)
+    values (#{articleId,jdbcType=BIGINT}, #{description,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}, 
+      #{textContent,jdbcType=LONGVARCHAR}, #{htmlContent,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleContent" >
+    insert into crawler_article_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        articleId,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="textContent != null" >
+        textContent,
+      </if>
+      <if test="htmlContent != null" >
+        htmlContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="textContent != null" >
+        #{textContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="htmlContent != null" >
+        #{htmlContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleContent" >
+    update crawler_article_content
+    <set>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="textContent != null" >
+        textContent = #{textContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="htmlContent != null" >
+        htmlContent = #{htmlContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleContent" >
+    update crawler_article_content
+    set description = #{description,jdbcType=LONGVARCHAR},
+        content = #{content,jdbcType=LONGVARCHAR},
+        textContent = #{textContent,jdbcType=LONGVARCHAR},
+        htmlContent = #{htmlContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

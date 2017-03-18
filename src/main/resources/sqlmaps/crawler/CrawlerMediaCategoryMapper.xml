@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.onemt.news.crawler.mysql.mapper.CrawlerMediaCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.onemt.news.crawler.mysql.entity.CrawlerMediaCategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="regex" property="regex" jdbcType="VARCHAR" />
+    <result column="processor" property="processor" jdbcType="VARCHAR" />
+    <result column="newsCategoryId" property="newsCategoryId" jdbcType="INTEGER" />
+    <result column="newsRegionId" property="newsRegionId" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="isDelete" property="isDelete" jdbcType="BIT" />
+    <result column="isEnable" property="isEnable" jdbcType="BIT" />
+    <result column="mediaId" property="mediaId" jdbcType="INTEGER" />
+    <result column="mediaName" property="mediaName" jdbcType="VARCHAR" />
+    <result column="mediaIcon" property="mediaIcon" jdbcType="VARCHAR" />
+    <result column="extend" property="extend" jdbcType="VARCHAR" />
+    <result column="sourceCategory" property="sourceCategory" jdbcType="VARCHAR" />
+    <!-- v1.2 新增字段 2017/1/16 -->
+    <result column="categoryId" property="categoryId" jdbcType="INTEGER" />
+    <result column="subcategoryId" property="subcategoryId" jdbcType="INTEGER" />
+    <result column="region" property="region" jdbcType="INTEGER" />
+    <!-- v1.2 新增字段 2017/1/16 -->
+    <result column="type" property="type" jdbcType="VARCHAR" />     
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, url, regex, processor, newsCategoryId, newsRegionId, createTime, creater, 
+    isDelete, isEnable, mediaId, mediaName, mediaIcon, extend, sourceCategory,categoryId,subcategoryId,region
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from crawler_media_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from crawler_media_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerMediaCategory" >
+    insert into crawler_media_category (id, name, url, 
+      regex, processor, newsCategoryId, 
+      newsRegionId, createTime, creater, 
+      isDelete, isEnable, mediaId, 
+      mediaName, mediaIcon, extend, 
+      sourceCategory,categoryId,subcategoryId,region)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{regex,jdbcType=VARCHAR}, #{processor,jdbcType=VARCHAR}, #{newsCategoryId,jdbcType=INTEGER}, 
+      #{newsRegionId,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=BIT}, #{isEnable,jdbcType=BIT}, #{mediaId,jdbcType=INTEGER}, 
+      #{mediaName,jdbcType=VARCHAR}, #{mediaIcon,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR}, 
+      #{sourceCategory,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, #{subcategoryId,jdbcType=INTEGER},
+      #{region,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerMediaCategory" >
+    insert into crawler_media_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="regex != null" >
+        regex,
+      </if>
+      <if test="processor != null" >
+        processor,
+      </if>
+      <if test="newsCategoryId != null" >
+        newsCategoryId,
+      </if>
+      <if test="newsRegionId != null" >
+        newsRegionId,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="isDelete != null" >
+        isDelete,
+      </if>
+      <if test="isEnable != null" >
+        isEnable,
+      </if>
+      <if test="mediaId != null" >
+        mediaId,
+      </if>
+      <if test="mediaName != null" >
+        mediaName,
+      </if>
+      <if test="mediaIcon != null" >
+        mediaIcon,
+      </if>
+      <if test="extend != null" >
+        extend,
+      </if>
+      <if test="sourceCategory != null" >
+        sourceCategory,
+      </if>
+      <if test="categoryId != null" >
+        categoryId,
+      </if>
+      <if test="subcategoryId != null" >
+        subcategoryId,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="regex != null" >
+        #{regex,jdbcType=VARCHAR},
+      </if>
+      <if test="processor != null" >
+        #{processor,jdbcType=VARCHAR},
+      </if>
+      <if test="newsCategoryId != null" >
+        #{newsCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="newsRegionId != null" >
+        #{newsRegionId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="isEnable != null" >
+        #{isEnable,jdbcType=BIT},
+      </if>
+      <if test="mediaId != null" >
+        #{mediaId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaName != null" >
+        #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaIcon != null" >
+        #{mediaIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null" >
+        #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceCategory != null" >
+        #{sourceCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="subcategoryId != null" >
+        #{subcategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerMediaCategory" >
+    update crawler_media_category
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="regex != null" >
+        regex = #{regex,jdbcType=VARCHAR},
+      </if>
+      <if test="processor != null" >
+        processor = #{processor,jdbcType=VARCHAR},
+      </if>
+      <if test="newsCategoryId != null" >
+        newsCategoryId = #{newsCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="newsRegionId != null" >
+        newsRegionId = #{newsRegionId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        isDelete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="isEnable != null" >
+        isEnable = #{isEnable,jdbcType=BIT},
+      </if>
+      <if test="mediaId != null" >
+        mediaId = #{mediaId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaName != null" >
+        mediaName = #{mediaName,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaIcon != null" >
+        mediaIcon = #{mediaIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null" >
+        extend = #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceCategory != null" >
+        sourceCategory = #{sourceCategory,jdbcType=VARCHAR},
+      </if>
+       <if test="categoryId != null" >
+       	categoryId = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="subcategoryId != null" >
+       	subcategoryId = #{subcategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="region != null" >
+       	region = #{region,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerMediaCategory" >
+    update crawler_media_category
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      regex = #{regex,jdbcType=VARCHAR},
+      processor = #{processor,jdbcType=VARCHAR},
+      newsCategoryId = #{newsCategoryId,jdbcType=INTEGER},
+      newsRegionId = #{newsRegionId,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=INTEGER},
+      creater = #{creater,jdbcType=VARCHAR},
+      isDelete = #{isDelete,jdbcType=BIT},
+      isEnable = #{isEnable,jdbcType=BIT},
+      mediaId = #{mediaId,jdbcType=INTEGER},
+      mediaName = #{mediaName,jdbcType=VARCHAR},
+      mediaIcon = #{mediaIcon,jdbcType=VARCHAR},
+      extend = #{extend,jdbcType=VARCHAR},
+      sourceCategory = #{sourceCategory,jdbcType=VARCHAR},
+      categoryId = #{categoryId,jdbcType=INTEGER},
+      subcategoryId = #{subcategoryId,jdbcType=INTEGER},
+      region = #{region,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+      <select id="selectAllEnable" resultMap="BaseResultMap" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from crawler_media_category
+	    where isDelete=0 and isEnable=1
+	  </select>
+</mapper>

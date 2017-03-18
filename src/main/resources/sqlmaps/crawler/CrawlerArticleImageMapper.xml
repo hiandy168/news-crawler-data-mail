@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.onemt.news.crawler.mysql.mapper.CrawlerArticleImageMapper" >
+  <resultMap id="BaseResultMap" type="com.onemt.news.crawler.mysql.entity.CrawlerArticleImage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="articleId" property="articleId" jdbcType="BIGINT" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="sourceUrl" property="sourceUrl" jdbcType="VARCHAR" />
+    <result column="sourceUrlMd5" property="sourceUrlMd5" jdbcType="VARCHAR" />
+    <result column="extension" property="extension" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+    <result column="orderNo" property="orderNo" jdbcType="INTEGER" />
+    <result column="isPrimary" property="isPrimary" jdbcType="BIT" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="alt" property="alt" jdbcType="VARCHAR" />
+    <result column="original" property="original" jdbcType="VARCHAR" />
+    <result column="thumb" property="thumb" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="INTEGER" />
+    <result column="downloadTime" property="downloadTime" jdbcType="INTEGER" />
+    <result column="larger" property="larger" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, articleId, height, width, path, sourceUrl, sourceUrlMd5, extension, size, orderNo, 
+    isPrimary, tag, alt, original, thumb, createTime, downloadTime,larger
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from crawler_article_image
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+   <!-- 返回值统一使用 resultMap="BaseResultMap"，mybatis会根据查询到的条目数量自动进行判断，如果是一条就返回对象，如果是多条就返回List对象列表-->
+   <select id="selectListByArticleId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from crawler_article_image
+    where articleId = #{articleId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from crawler_article_image
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleImage" >
+    insert into crawler_article_image (id, articleId, height, 
+      width, path, sourceUrl, 
+      sourceUrlMd5, extension, size, 
+      orderNo, isPrimary, tag, 
+      alt, original, thumb, 
+      createTime, downloadTime,larger)
+    values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{height,jdbcType=INTEGER}, 
+      #{width,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{sourceUrl,jdbcType=VARCHAR}, 
+      #{sourceUrlMd5,jdbcType=VARCHAR}, #{extension,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, 
+      #{orderNo,jdbcType=INTEGER}, #{isPrimary,jdbcType=BIT}, #{tag,jdbcType=VARCHAR}, 
+      #{alt,jdbcType=VARCHAR}, #{original,jdbcType=VARCHAR}, #{thumb,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=INTEGER}, #{downloadTime,jdbcType=INTEGER}, #{larger,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleImage" >
+    insert into crawler_article_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="articleId != null" >
+        articleId,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="sourceUrl != null" >
+        sourceUrl,
+      </if>
+      <if test="sourceUrlMd5 != null" >
+        sourceUrlMd5,
+      </if>
+      <if test="extension != null" >
+        extension,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="orderNo != null" >
+        orderNo,
+      </if>
+      <if test="isPrimary != null" >
+        isPrimary,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="alt != null" >
+        alt,
+      </if>
+      <if test="original != null" >
+        original,
+      </if>
+      <if test="thumb != null" >
+        thumb,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="downloadTime != null" >
+        downloadTime,
+      </if>
+       <if test="thumb != null" >
+        larger,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrl != null" >
+        #{sourceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrlMd5 != null" >
+        #{sourceUrlMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="extension != null" >
+        #{extension,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="isPrimary != null" >
+        #{isPrimary,jdbcType=BIT},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="alt != null" >
+        #{alt,jdbcType=VARCHAR},
+      </if>
+      <if test="original != null" >
+        #{original,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null" >
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="downloadTime != null" >
+        #{downloadTime,jdbcType=INTEGER},
+      </if>
+       <if test="larger != null" >
+        #{larger,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleImage" >
+    update crawler_article_image
+    <set >
+      <if test="articleId != null" >
+        articleId = #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrl != null" >
+        sourceUrl = #{sourceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrlMd5 != null" >
+        sourceUrlMd5 = #{sourceUrlMd5,jdbcType=VARCHAR},
+      </if>
+      <if test="extension != null" >
+        extension = #{extension,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        orderNo = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="isPrimary != null" >
+        isPrimary = #{isPrimary,jdbcType=BIT},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="alt != null" >
+        alt = #{alt,jdbcType=VARCHAR},
+      </if>
+      <if test="original != null" >
+        original = #{original,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null" >
+        thumb = #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="downloadTime != null" >
+        downloadTime = #{downloadTime,jdbcType=INTEGER},
+      </if>
+      <if test="larger != null" >
+        larger = #{larger,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.onemt.news.crawler.mysql.entity.CrawlerArticleImage" >
+    update crawler_article_image
+    set articleId = #{articleId,jdbcType=BIGINT},
+      height = #{height,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      sourceUrl = #{sourceUrl,jdbcType=VARCHAR},
+      sourceUrlMd5 = #{sourceUrlMd5,jdbcType=VARCHAR},
+      extension = #{extension,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER},
+      orderNo = #{orderNo,jdbcType=INTEGER},
+      isPrimary = #{isPrimary,jdbcType=BIT},
+      tag = #{tag,jdbcType=VARCHAR},
+      alt = #{alt,jdbcType=VARCHAR},
+      original = #{original,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=INTEGER},
+      downloadTime = #{downloadTime,jdbcType=INTEGER},
+      larger = #{larger,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <insert id="batchInsert" parameterType="List">
+	    insert into crawler_article_image (articleId, height, 
+      width, path, sourceUrl, 
+      sourceUrlMd5, extension, size, 
+      orderNo, isPrimary, tag, 
+      alt, original, thumb, 
+      createTime, downloadTime,larger)
+	    values 
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			( #{item.articleId,jdbcType=BIGINT}, #{item.height,jdbcType=INTEGER}, 
+		      #{item.width,jdbcType=INTEGER}, #{item.path,jdbcType=VARCHAR}, #{item.sourceUrl,jdbcType=VARCHAR}, 
+		      #{item.sourceUrlMd5,jdbcType=VARCHAR}, #{item.extension,jdbcType=VARCHAR}, #{item.size,jdbcType=INTEGER}, 
+		      #{item.orderNo,jdbcType=INTEGER}, #{item.isPrimary,jdbcType=BIT}, #{item.tag,jdbcType=VARCHAR}, 
+		      #{item.alt,jdbcType=VARCHAR}, #{item.original,jdbcType=VARCHAR}, #{item.thumb,jdbcType=VARCHAR}, 
+		      #{item.createTime,jdbcType=INTEGER}, #{item.downloadTime,jdbcType=INTEGER}, #{item.larger,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+</mapper>
