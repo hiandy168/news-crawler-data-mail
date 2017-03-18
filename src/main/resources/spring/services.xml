@@ -19,13 +19,13 @@
 		事务声明
 		应用范围：下任意深度的包名中以service层结尾类
 	-->
-	<aop:config proxy-target-class="true">
+	<!-- <aop:config proxy-target-class="true">
 		<aop:advisor advice-ref="txAdvice"
 			pointcut="execution(* com.onemt.news.crawler.service.*.*(..))" />
-	</aop:config>
+	</aop:config> -->
 
 	<!-- 通用事务通知 -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="do*" propagation="REQUIRED" rollback-for="Exception" />
 			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />  
@@ -35,5 +35,5 @@
             <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
             <tx:method name="*" read-only="true" />  
 		</tx:attributes>
-	</tx:advice>
+	</tx:advice> -->
 </beans>
