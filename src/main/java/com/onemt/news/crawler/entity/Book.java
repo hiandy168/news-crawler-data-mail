@@ -1,7 +1,11 @@
 package com.onemt.news.crawler.entity;
 
-public class Book {
+import java.io.Serializable;
 
+public class Book implements Serializable {
+
+	
+	private static final long serialVersionUID = -8414055789329701202L;
 	private String id;
 	private String name;
 	private Double price;

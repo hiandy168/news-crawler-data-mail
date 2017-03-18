@@ -32,13 +32,13 @@
 		<!-- 连接池配置. -->
 		<property name="poolConfig" ref="jedisPoolConfig" />
 		<!-- Redis服务主机. -->
-		<property name="hostName" value="127.0.0.1" />
+		<property name="hostName" value="${redis.domain}" />
 		<!-- Redis服务端口号. -->
-		<property name="port" value="6379" />
+		<property name="port" value="${redis.port}" />
 		<!-- Redis服务连接密码. -->
 		<!-- <property name="password" value="${redis.password}" /> -->
 		<!-- 连超时设置. -->
-		<!-- <property name="timeout" value="${redis.timeout}" /> -->
+		<property name="timeout" value="${redis.timeout}" />
 		<!-- 是否使用连接池. -->
 		<property name="usePool" value="true" />
 	</bean>
