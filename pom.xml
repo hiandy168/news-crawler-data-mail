@@ -8,7 +8,7 @@
 	<name />
 	<description />
 	<properties>
-		<spring.version>4.2.9.RELEASE</spring.version>
+		<spring.version>4.3.7.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<repositories>
@@ -23,7 +23,7 @@
    				<enabled>false</enabled>
    			</snapshots>
    		</repository>  -->
-   		<repository>
+   		<!-- <repository>
 			<id>central</id>
 			<name>Team Nexus Repository</name>
 			<url>http://192.168.8.242:8081/nexus/content/groups/public</url>
@@ -33,9 +33,22 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-		</repository>
+		</repository> -->
 	</repositories>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.9.0.pr1</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -72,6 +85,7 @@
 		    <artifactId>spring-data-redis</artifactId>
 		    <version>1.7.6.RELEASE</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -198,4 +212,15 @@
 			<version>1.9</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
