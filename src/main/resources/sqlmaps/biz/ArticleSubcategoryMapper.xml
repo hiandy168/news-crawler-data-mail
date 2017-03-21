@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.onemt.news.crawler.mysql.biz.mapper.ArticleSubcategoryMapper" >
+  <select id="selectByFetchTime" parameterType="HashMap"
+		resultType="com.onemt.news.crawler.mysql.biz.entity.SubcategoryVo">
+		SELECT
+			IFNULL(tt.categoryId,'所有分类采集文章总数:') categoryId,
+			(case when tt.categoryId is not null then IFNULL(tt.id,'该分类采集文章总数:')else null end) id,
+			c.NAME,
+			total
+		FROM
+			(
+				SELECT
+					t.categoryId,
+					t.id,
+					count(cc.id) total
+				FROM
+					onemt_news.article_subcategory t
+				LEFT JOIN (
+					SELECT
+						c.id,
+						c.subcategoryId
+					FROM
+						crawler_article c
+					WHERE
+						c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
+					AND UNIX_TIMESTAMP(TIMESTAMPADD(DAY,1,#{date}))
+				) cc ON t.id = cc.subcategoryId
+				GROUP BY
+					t.categoryId,
+					t.id WITH ROLLUP
+			) tt
+		LEFT JOIN onemt_news.article_subcategory c ON tt.id = c.id
+	</select>
+</mapper>

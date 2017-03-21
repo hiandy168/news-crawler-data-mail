@@ -1,4 +1,4 @@
-package com.onemt.news.crawler.mapper;
+package com.onemt.news.crawler.mysql.mapper;
 
 /**
  * 

@@ -22,11 +22,11 @@
 		/> -->
 
 	<!-- 配置jobDetail -->
-	<bean id="mailJobDetail"
+	<bean id="dingdingJobDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<!-- 用到的Job实例 -->
 		<property name="targetObject">
-			<ref bean="newsCrawlerMailJob" />
+			<ref bean="chatbotSendJob" />
 		</property>
 		<!-- Job实例中的方法 -->
 		<property name="targetMethod">
@@ -39,14 +39,14 @@
 	</bean>
 
 	<!-- 配置触发器Trigger -->
-	<bean id="mailTrigger"
+	<bean id="dingdingTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail">
-			<ref bean="mailJobDetail" />
+			<ref bean="dingdingJobDetail" />
 		</property>
 		<property name="cronExpression">
-			<!-- 每1小时执行一次 -->
-			<value>0 33 */1 * * ?</value>
+			<!-- 每天9点执行 -->
+			<value>0 0 9 * * ?</value>
 		</property>
 	</bean>
 
@@ -55,7 +55,7 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="mailTrigger" />
+				<ref bean="dingdingTrigger" />
 			</list>
 		</property>
 	</bean>
@@ -88,6 +88,7 @@
 	</bean>
 
 
+	<bean id="chatbotSendJob" class="com.onemt.news.crawler.job.ChatbotSendJob" init-method="init"  lazy-init="false" />
 	<!-- <bean id="newsCrawlerMailJob" class="com.onemt.news.crawler.job.NewsCrawlerMailJob" init-method="init"  lazy-init="false" /> -->
 
 </beans>

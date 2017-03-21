@@ -14,11 +14,9 @@
 		<typeAlias alias="List" type="java.util.List" />
 	</typeAliases>
 	<mappers>
-		<mapper resource="sqlmaps/crawler/CrawlerArticleImageMapper.xml" /> 
-		<mapper resource="sqlmaps/crawler/CrawlerArticleMapper.xml" />
-		<mapper resource="sqlmaps/crawler/CrawlerArticleContentMapper.xml" />
 		<mapper resource="sqlmaps/crawler/CrawlerMediaCategoryMapper.xml" />
-		<mapper resource="sqlmaps/biz/ArticleContentMapper.xml" /> 
-		<mapper resource="sqlmaps/biz/ArticleMapper.xml" />
+		<mapper resource="sqlmaps/crawler/CrawlerArticleMapper.xml" /> 
+		<mapper resource="sqlmaps/biz/ArticleCategoryMapper.xml" />
+		<mapper resource="sqlmaps/biz/ArticleSubcategoryMapper.xml" />
 	</mappers>
 </configuration>
