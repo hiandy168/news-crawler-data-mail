@@ -11,13 +11,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/sendEmail")
+
 public class SendEmailController {
 
    @Autowired
    private JavaMailSender mailSender;
-    
-   @RequestMapping(method = RequestMethod.POST)
+   
+   @RequestMapping("/emailform")
+   public String sendEmailIndex(){
+	   return "EmailForm";
+   }
+   
+   
+   @RequestMapping(value="/sendEmail",method = RequestMethod.POST)
    public String doSendEmail(HttpServletRequest request) {
        // takes input from e-mail form
        String recipientAddress = request.getParameter("recipient");

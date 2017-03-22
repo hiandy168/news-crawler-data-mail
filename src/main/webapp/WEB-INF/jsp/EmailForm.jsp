@@ -5,6 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Email with Spring MVC</title>
+<script src="<%=request.getContextPath()%>/dist/jquery.min.js"></script>
+ <script src="<%=request.getContextPath()%>/dist/jquery.xpath.js"></script>
+ <script src="<%=request.getContextPath()%>/dist/jquery.ellocate.js"></script>
+ <style type="text/css">
+ 	.add_border{
+ 		border:1px solid blue;
+ 	}
+ </style>
+
 </head>
 <body>
 	<center>
@@ -32,5 +41,16 @@
 			</table>
 		</form>
 	</center>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(document).mouseover(function(e) {
+				$(e.target).toggleClass("add_border");
+			}).mouseout(function(e){
+				$(e.target).toggleClass("add_border");
+			}).click(function(e){
+				console.log($(e.target).ellocate());
+			});
+		});
+	</script>
 </body>
 </html>

@@ -46,7 +46,7 @@
 		</property>
 		<property name="cronExpression">
 			<!-- 每天9点执行 -->
-			<value>0 0 9 * * ?</value>
+			<value>0 38 15 * * ?</value>
 		</property>
 	</bean>
 
@@ -88,7 +88,7 @@
 	</bean>
 
 
-	<bean id="chatbotSendJob" class="com.onemt.news.crawler.job.ChatbotSendJob" init-method="init"  lazy-init="false" />
+	<!-- <bean id="chatbotSendJob" class="com.onemt.news.crawler.job.ChatbotSendJob" init-method="init"  lazy-init="false" /> -->
 	<!-- <bean id="newsCrawlerMailJob" class="com.onemt.news.crawler.job.NewsCrawlerMailJob" init-method="init"  lazy-init="false" /> -->
 
 </beans>

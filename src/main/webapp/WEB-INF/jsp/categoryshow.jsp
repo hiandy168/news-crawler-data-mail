@@ -31,6 +31,9 @@
 <script
 	src="<%=request.getContextPath()%>/dist/locale/bootstrap-table-zh-CN.js"></script>
  <script src="<%=request.getContextPath()%>/dist/echarts.common.min.js"></script>
+ 
+
+ 
 </head>
 
 <body>
@@ -174,6 +177,7 @@
 				title : '采集文章数'
 			}, ]
 		});
+		
 	</script>
 </body>
 </html>
