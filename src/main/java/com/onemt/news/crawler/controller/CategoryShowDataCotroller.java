@@ -1,6 +1,7 @@
 package com.onemt.news.crawler.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -58,21 +59,14 @@ public class CategoryShowDataCotroller {
 		
 		for (ArticleVo articleVo : articleVos) {
 			dateSet.add(articleVo.getDate());
-			
-			switch (articleVo.getType()) {
-			case "text":
-				textList.add(articleVo.getTotal());
-				break;
-			case "gallery":
-				galleryList.add(articleVo.getTotal());
-				break;
-
-			case "video":
-				videoList.add(articleVo.getTotal());
-				break;
-			}
 		}
 		
+		for (String date : dateSet) {
+			textList.add(getArticleVo(articleVos,date,"text"));
+			galleryList.add(getArticleVo(articleVos,date,"gallery"));
+			videoList.add(getArticleVo(articleVos,date,"video"));
+		}
+
 		CrawlerData crawlerData=new CrawlerData();
 		crawlerData.setDate(dateSet.toArray(new String[dateSet.size()]));
 		crawlerData.setTextData(textList.toArray(new String[textList.size()]));
@@ -83,6 +77,16 @@ public class CategoryShowDataCotroller {
 	}
 	
 	
+	private String getArticleVo(List<ArticleVo> articleVos, String date,String type) {
+		for (ArticleVo articleVo : articleVos) {
+			if(date.equals(articleVo.getDate())&&type.equals(articleVo.getType())){
+					return articleVo.getTotal();
+			}
+		}
+		return "";
+	}
+
+
 	// 统计每天数据源采集情况
 	@ResponseBody
 	@RequestMapping("/category")
