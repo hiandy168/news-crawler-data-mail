@@ -80,7 +80,7 @@ public class CategoryShowDataCotroller {
 					return articleVo.getTotal();
 			}
 		}
-		return "";
+		return "0";
 	}
 
 
