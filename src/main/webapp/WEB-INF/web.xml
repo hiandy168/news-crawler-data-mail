@@ -20,7 +20,7 @@
 			classpath:spring/applicationContext.xml
 			classpath:spring/datasource.xml
 			classpath:spring/services.xml
-			classpath:spring/redis.xml
+			<!-- classpath:spring/redis.xml -->
 		</param-value>
 	</context-param>
 

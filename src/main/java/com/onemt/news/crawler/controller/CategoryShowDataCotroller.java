@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.onemt.news.crawler.mysql.biz.entity.CategoryVo;
 import com.onemt.news.crawler.mysql.biz.entity.SubcategoryVo;
+import com.onemt.news.crawler.mysql.entity.ArticlePerHourStatVo;
 import com.onemt.news.crawler.mysql.entity.ArticleVo;
 import com.onemt.news.crawler.pojo.CrawlerData;
 import com.onemt.news.crawler.service.ArticleCategoryService;
@@ -53,6 +54,7 @@ public class CategoryShowDataCotroller {
 		List<String> textList=new ArrayList<>();
 		List<String> galleryList=new ArrayList<>();
 		List<String> videoList=new ArrayList<>();
+		List<String> breakingnewsList=new ArrayList<>();
 		
 		for (ArticleVo articleVo : articleVos) {
 			dateSet.add(articleVo.getDate());
@@ -62,6 +64,7 @@ public class CategoryShowDataCotroller {
 			textList.add(getArticleVo(articleVos,date,"text"));
 			galleryList.add(getArticleVo(articleVos,date,"gallery"));
 			videoList.add(getArticleVo(articleVos,date,"video"));
+			breakingnewsList.add(getArticleVo(articleVos,date,"breakingnews"));
 		}
 
 		CrawlerData crawlerData=new CrawlerData();
@@ -69,7 +72,7 @@ public class CategoryShowDataCotroller {
 		crawlerData.setTextData(textList.toArray(new String[textList.size()]));
 		crawlerData.setGalleryData(galleryList.toArray(new String[galleryList.size()]));
 		crawlerData.setVideoData(videoList.toArray(new String[galleryList.size()]));
-		
+		crawlerData.setBreakingnewsData(breakingnewsList.toArray(new String[breakingnewsList.size()]));
 		return crawlerData;
 	}
 	
@@ -83,6 +86,13 @@ public class CategoryShowDataCotroller {
 		return "0";
 	}
 
+	//统计十天内每小时采集情况
+	@ResponseBody
+	@RequestMapping("/perHourStat")
+	public List<ArticlePerHourStatVo> showPerHourStat(Model model) {
+		List<ArticlePerHourStatVo> articlePerHourStatVos = crawlerArticleService.selectPerHourStat();
+		return articlePerHourStatVos;
+	}
 
 	// 统计每天数据源采集情况
 	@ResponseBody

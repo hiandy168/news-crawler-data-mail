@@ -19,5 +19,301 @@
 			)
 			GROUP BY
 				FROM_UNIXTIME(c.fetchTime, '%Y-%m-%d'),c.type
+				
+			UNION ALL
+			
+			SELECT
+				FROM_UNIXTIME(c.fetchTime, '%Y-%m-%d') date,
+				'breakingnews' type,
+				count(*) total
+			FROM
+				crawler_breaking_news c
+			WHERE
+				c.fetchTime BETWEEN UNIX_TIMESTAMP(
+					TIMESTAMPADD(DAY, - 9, #{date})
+				)
+			AND UNIX_TIMESTAMP(
+				TIMESTAMPADD(DAY, 1, #{date})
+			)
+			GROUP BY
+				FROM_UNIXTIME(c.fetchTime, '%Y-%m-%d')
 	</select>
+	
+	
+	<select id="selectPerHourStat" parameterType="HashMap"
+		resultType="com.onemt.news.crawler.mysql.entity.ArticlePerHourStatVo">
+			SELECT
+			FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d') date,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 1 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f0t1,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 1 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 2 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f1t2,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 2 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 3 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f2t3,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 3 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 4 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f3t4,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 4 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 5 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f4t5,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 5 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 6 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f5t6,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 6 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 7 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f6t7,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 7 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 8 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f7t8,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 8 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 9 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f8t9,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 9 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 10 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f9t10,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 10 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 11 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f10t11,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 11 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 12 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f11t12,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 12 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 13 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f12t13,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 13 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 14 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f13t14,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 14 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 15 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f14t15,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 15 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 16 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f15t16,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 16 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 17 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f16t17,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 17 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 18 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f17t18,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 18 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 19 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f18t19,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 19 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 20 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f19t20,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 20 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 21 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f20t21,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 21 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 22 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f21t22,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 22 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 23 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f22t23,
+			 sum(
+				CASE
+				WHEN t.fetchTime BETWEEN UNIX_TIMESTAMP(	DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 23 HOUR))
+				AND UNIX_TIMESTAMP(
+					DATE_ADD(FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d'), INTERVAL 24 HOUR)
+				) THEN
+					1
+				ELSE
+					0
+				END
+			) f23t0,
+			count(*) total
+			FROM
+				crawler_article t
+			WHERE
+				t.fetchTime BETWEEN UNIX_TIMESTAMP(DATE_ADD(current_date(), INTERVAL -9 day))
+			AND UNIX_TIMESTAMP(DATE_ADD(current_date(), INTERVAL 1 day)) group by FROM_UNIXTIME(t.fetchTime,'%Y-%m-%d');
+	</select>
+	
 </mapper>

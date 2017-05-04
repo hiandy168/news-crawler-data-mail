@@ -9,57 +9,61 @@ public class CrawlerData implements Serializable {
 	private String[] textData;
 	private String[] galleryData;
 	private String[] videoData;
+	private String[] breakingnewsData;
 	
 	public CrawlerData() {
 	}
-
+	
 	public CrawlerData(String[] date, String[] textData, String[] galleryData,
-			String[] videoData) {
+			String[] videoData, String[] breakingnewsData) {
 		this.date = date;
 		this.textData = textData;
 		this.galleryData = galleryData;
 		this.videoData = videoData;
+		this.breakingnewsData = breakingnewsData;
 	}
-	
-	
-	
+
+
+
+
 	public String[] getDate() {
 		return date;
 	}
-
 
 	public void setDate(String[] date) {
 		this.date = date;
 	}
 
-
 	public String[] getTextData() {
 		return textData;
 	}
-
 
 	public void setTextData(String[] textData) {
 		this.textData = textData;
 	}
 
-
 	public String[] getGalleryData() {
 		return galleryData;
 	}
-
 
 	public void setGalleryData(String[] galleryData) {
 		this.galleryData = galleryData;
 	}
 
-
 	public String[] getVideoData() {
 		return videoData;
 	}
 
-
 	public void setVideoData(String[] videoData) {
 		this.videoData = videoData;
+	}
+
+	public String[] getBreakingnewsData() {
+		return breakingnewsData;
+	}
+
+	public void setBreakingnewsData(String[] breakingnewsData) {
+		this.breakingnewsData = breakingnewsData;
 	}
 
 

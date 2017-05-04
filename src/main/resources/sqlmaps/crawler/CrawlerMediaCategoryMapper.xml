@@ -7,108 +7,247 @@
 		resultType="com.onemt.news.crawler.mysql.entity.MediaCategoryVo">
 		SELECT
 			IFNULL(
-				m.mediaId,concat('新闻源总数:',CONVERT(count(distinct m.mediaId),char))
+				t.mediaId,
+				concat(
+					'新闻源总数:',
+					CONVERT (
+						count(DISTINCT t.mediaId),
+						CHAR
+					)
+				)
 			) mediaId,
 			IFNULL(
-				m.id,
+				t.id,
 				(
 					CASE
-					WHEN m.mediaId IS NULL THEN
+					WHEN t.mediaId IS NULL THEN
 						CONCAT(
 							'同源媒体总数:',
-							count(DISTINCT m.id)
+							count(DISTINCT t.id)
 						)
 					ELSE
 						CONCAT(
 							'同源:',
-							m.processor,
+							t.processor,
 							' 媒体总数:',
-							count(DISTINCT m.id)
+							count(DISTINCT t.id)
 						)
 					END
 				)
-			)
-			id,
+			) id,
 		
-		IF (
-			m.id IS NOT NULL,
+			IF (
+				t.id IS NOT NULL,
 		
-		IF (
-			m.extend = 'index',
-			'排除index项',
-			count(cc.id)
-		),
-		
-		IF (
-			m.mediaId IS NULL,
-			CONCAT(
-				'采集文章总数:',
-				count(cc.id)
+			IF (
+				t.extend = 'index',
+				'排除index项',
+				sum(t.total)
 			),
-			CONCAT(
-				'该源',
-				m.processor,
-				'采集文章总数:',
-				count(cc.id)
+		
+			IF (
+				t.mediaId IS NULL,
+				CONCAT(
+					'采集文章总数:',
+					sum(t.total)
+				),
+				CONCAT(
+					'该源',
+					t.processor,
+					'采集文章总数:',
+					sum(t.total)
+				)
 			)
-		)
-		) total
+			) total
 		FROM
-			crawler_media_category m
-		LEFT JOIN (
-			SELECT
-				c.mediaCategoryId,
-				c.id
-			FROM
-				crawler_article c
-			WHERE
-				c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date}) and  UNIX_TIMESTAMP(TIMESTAMPADD(DAY,1,#{date}))
-		) cc ON m.id = cc.mediaCategoryId
-		 where m.isEnable=1
+			(
+				<!-- 文本,视频,图集 -->
+				SELECT
+					m.mediaId,
+					m.id,
+					m.processor,
+					m.extend,
+					count(cc.id) total
+				FROM
+					crawler_media_category m
+				LEFT JOIN (
+					SELECT
+						c.mediaCategoryId,
+						c.id
+					FROM
+						crawler_article c
+					WHERE
+						c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
+					AND UNIX_TIMESTAMP(
+						TIMESTAMPADD(DAY, 1, #{date})
+					)
+				) cc ON m.id = cc.mediaCategoryId
+				WHERE
+					m.isEnable = 1
+				AND m.type != 'breakingnews'
+				GROUP BY
+					m.mediaId,
+					m.id
+				
+				UNION ALL
+				<!-- 快讯 -->
+					SELECT
+						m.mediaId,
+						m.id,
+						m.processor,
+						m.extend,
+						count(cc.id) total
+					FROM
+						crawler_media_category m
+					LEFT JOIN (
+						SELECT
+							c.mediaCategoryId,
+							c.id
+						FROM
+							crawler_breaking_news c
+						WHERE
+							c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
+						AND UNIX_TIMESTAMP(
+							TIMESTAMPADD(DAY, 1, #{date})
+						)
+					) cc ON m.id = cc.mediaCategoryId
+					WHERE
+						m.isEnable = 1
+					AND m.type = 'breakingnews'
+					GROUP BY
+						m.mediaId,
+						m.id
+			) t
 		GROUP BY
-			m.mediaId,
-			m.id WITH ROLLUP
+			t.mediaId,
+			t.id WITH ROLLUP	
+			
 	</select>
 	
 	
 	<!-- 源的统计 -->
 	<select id="selectByFetchTimeForMedia" parameterType="HashMap"
 		resultType="com.onemt.news.crawler.mysql.entity.MediaVo">
-		SELECT
-			ifnull(m.mediaid,CONCAT(
-			<if test="type == null">
-            '采集文章总数:'
-        	</if>
-        	<if test="type != null and type=='text'">
-            '文本源采集总数:'
-        	</if>
-        	<if test="type != null and type=='gallery'">
-            '图集源采集总数:'
-        	</if>
-        	<if test="type != null and type=='video'">
-            '视频源采集文章总数:'
-        	</if>
-			)) id,
-			count(cc.id) total
-		FROM
-			crawler_media_category m
-		LEFT JOIN (
+		<if test="type==null">
 			SELECT
-				c.id,
-				c.mediaCategoryId
+				ifnull(
+					mediaid,
+					CONCAT('文本源采集总数:')
+				) id,
+				SUM(total) total
 			FROM
-				crawler_article c
+				(
+					SELECT
+						m.mediaid mediaid,
+						count(cc.id) total
+					FROM
+						crawler_media_category m
+					LEFT JOIN (
+						SELECT
+							c.id,
+							c.mediaCategoryId
+						FROM
+							crawler_article c
+						WHERE
+							c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
+						AND UNIX_TIMESTAMP(
+							TIMESTAMPADD(DAY, 1, #{date})
+						)
+					) cc ON m.id = cc.mediaCategoryId
+					WHERE
+						m.isEnable = 1
+					AND m.type != 'breakingnews'
+					GROUP BY
+						m.mediaId
+			
+					UNION ALL
+			
+						SELECT
+							m.mediaid,
+							count(cc.id) total
+						FROM
+							crawler_media_category m
+						LEFT JOIN (
+							SELECT
+								c.id,
+								c.mediaCategoryId
+							FROM
+								crawler_breaking_news c
+							WHERE
+								c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
+							AND UNIX_TIMESTAMP(
+								TIMESTAMPADD(DAY, 1, #{date})
+							)
+						) cc ON m.id = cc.mediaCategoryId
+						WHERE
+							m.isEnable = 1
+						AND m.type = 'breakingnews'
+						GROUP BY
+							m.mediaId
+				) t
+			GROUP BY
+				mediaId WITH ROLLUP
+		</if>
+		
+		
+		<if test="type!=null and type != 'breakingnews'">	
+			SELECT
+				ifnull(m.mediaid,CONCAT(
+	        	<if test="type != null and type=='text'">
+	            '文本源采集总数:'
+	        	</if>
+	        	<if test="type != null and type=='gallery'">
+	            '图集源采集总数:'
+	        	</if>
+	        	<if test="type != null and type=='video'">
+	            '视频源采集文章总数:'
+	        	</if>
+				)) id,
+				count(cc.id) total
+			FROM
+				crawler_media_category m
+			LEFT JOIN (
+				SELECT
+					c.id,
+					c.mediaCategoryId
+				FROM
+					crawler_article c
+				WHERE
+					c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
+				AND UNIX_TIMESTAMP(TIMESTAMPADD(DAY,1,#{date}))
+			) cc ON m.id = cc.mediaCategoryId
 			WHERE
-				c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
-			AND UNIX_TIMESTAMP(TIMESTAMPADD(DAY,1,#{date}))
-		) cc ON m.id = cc.mediaCategoryId
-		WHERE
-			m.isEnable = 1	
-		<if test="type != null">
-            and m.type=#{type}
-        </if>
-		GROUP BY
-			m.mediaId WITH ROLLUP
+				m.isEnable = 1
+			<if test="type != null">
+	            and m.type=#{type}
+	        </if>
+			GROUP BY
+				m.mediaId WITH ROLLUP
+		</if>
+		
+		<if test="type == 'breakingnews'">
+			SELECT
+				ifnull(m.mediaid,CONCAT('快讯采集总数:')) id,
+				count(cc.id) total
+			FROM
+				crawler_media_category m
+			LEFT JOIN (
+				SELECT
+					c.id,
+					c.mediaCategoryId
+				FROM
+					crawler_breaking_news c
+				WHERE
+					c.fetchTime BETWEEN UNIX_TIMESTAMP(#{date})
+				AND UNIX_TIMESTAMP(TIMESTAMPADD(DAY,1,#{date}))
+			) cc ON m.id = cc.mediaCategoryId
+			WHERE
+				m.isEnable = 1
+	            and m.type = 'breakingnews' 
+			GROUP BY
+				m.mediaId WITH ROLLUP
+		</if>
+			
 	</select>
 
 	

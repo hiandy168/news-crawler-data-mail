@@ -61,22 +61,22 @@
 	</bean>
 
 	<!--邮件发送实现类 -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<!-- SMTP settings -->
+<!-- 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		SMTP settings
 		<property name="host" value="${email.host}" />
 		<property name="port" value="${email.port}" />
 		<property name="username" value="${email.username}" />
 		<property name="password" value="${email.password}" />
 
 		<property name="javaMailProperties">
-			<!-- additional properties specific to JavaMail -->
+			additional properties specific to JavaMail
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>
 				<prop key="mail.smtp.auth">true</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
 			</props>
 		</property>
-	</bean>
+	</bean> -->
 
 	<bean
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

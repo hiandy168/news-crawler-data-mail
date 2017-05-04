@@ -15,7 +15,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 
-@Component
+//@Component
 public class NewsCrawlerMailJob {
 
 	

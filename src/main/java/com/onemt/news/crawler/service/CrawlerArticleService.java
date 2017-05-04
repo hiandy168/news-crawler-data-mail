@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.onemt.news.crawler.multidatasource.DataSource;
 import com.onemt.news.crawler.mysql.dao.CrawlerArticleDao;
+import com.onemt.news.crawler.mysql.entity.ArticlePerHourStatVo;
 import com.onemt.news.crawler.mysql.entity.ArticleVo;
 
 @Service
@@ -19,6 +20,11 @@ public class CrawlerArticleService {
 	@DataSource("crawlerDataSource")
 	public List<ArticleVo> selectByFetchTime(String date){
 		 return crawlerArticleDao.selectByFetchTime(date);
+	 }
+	
+	@DataSource("crawlerDataSource")
+	public List<ArticlePerHourStatVo> selectPerHourStat(){
+		 return crawlerArticleDao.selectPerHourStat();
 	 }
 	
 }

@@ -32,68 +32,110 @@
 <script
 	src="<%=request.getContextPath()%>/dist/locale/bootstrap-table-zh-CN.js"></script>
 
+	<style type="text/css">
+		.panel{
+			display:none;
+			height:900;
+		}
+		.panel-body{
+			height:850;
+		}
+		table{
+			font-size:14px;
+		}
+	</style>
+	
+	<script type="text/javascript">
+		$(function(){
+			$("#list-group").click(function(event){
+				if(event.target.nodeName=='LI'){
+					var dataVal=$(event.target).attr("data-val");
+					$(".panel[data-val]").css("display","none");
+					$(".panel[data-val="+dataVal+"]").css("display","block");
+				}
+			});
+		});
+	</script>
+ 
 </head>
-
 <body>
-	<div class="container">
-		<div class="panel panel-primary">
-			<!-- Default panel contents -->
-			<div class="panel-heading">新闻源采集情况(${sessionScope.date})</div>
-			<div class="panel-body">
-				<table id="media"></table>
-			</div>
-		</div>
-	</div>
-	
-	<div class="container">
-		<div class="panel panel-primary">
-			<!-- Default panel contents -->
-			<div class="panel-heading">新闻源采集情况(${sessionScope.date})</div>
-			<div class="panel-body">
-				<table id="mediacategory"></table>
-			</div>
-		</div>
-	</div>
-	
-	<div class="container">
-		<div class="panel panel-primary">
-			<!-- Default panel contents -->
-			<div class="panel-heading">文本源采集情况(${sessionScope.date})</div>
-			<div class="panel-body">
-				<table id="mediaText"></table>
-			</div>
-		</div>
-	</div>
-	
-	<div class="container">
-		<div class="panel panel-primary">
-			<!-- Default panel contents -->
-			<div class="panel-heading">图集源采集情况(${sessionScope.date})</div>
-			<div class="panel-body">
-				<table id="mediaGallery"></table>
-			</div>
-		</div>
-	</div>
-	
-	<div class="container">
-		<div class="panel panel-primary">
-			<!-- Default panel contents -->
-			<div class="panel-heading">视频源采集情况(${sessionScope.date})</div>
-			<div class="panel-body">
-				<table id="mediaVideo"></table>
-			</div>
-		</div>
-	</div>
 
-	<div class="container">
-		<div class="panel panel-primary">
-			<!-- Default panel contents -->
-			<div class="panel-heading">新闻源未开启采集列表(${sessionScope.date})</div>
-			<div class="panel-body">
-				<table id="mediaopen"></table>
-			</div>
+	<div class="container-fluid" style="margin-top:10px;">
+		<div class="col-md-2">
+			<ul class="list-group" id="list-group">
+				<li class="list-group-item active">爬虫统计数据</li>
+				<li class="list-group-item" style="cursor:pointer" data-val="list-1">新闻源采集情况(${sessionScope.date})</li>
+				<li class="list-group-item" style="cursor:pointer" data-val="list-2">新闻源子分类采集情况(${sessionScope.date})</li>
+				<li class="list-group-item" style="cursor:pointer" data-val="list-3">文本源采集情况(${sessionScope.date})</li>
+				<li class="list-group-item" style="cursor:pointer" data-val="list-4">图集源采集情况(${sessionScope.date})</li>
+				<li class="list-group-item" style="cursor:pointer" data-val="list-5">视频源采集情况(${sessionScope.date})</li>
+				<li class="list-group-item" style="cursor:pointer" data-val="list-6">快讯采集情况(${sessionScope.date})</li>
+				<li class="list-group-item" style="cursor:pointer" data-val="list-7">新闻源未开启采集列表(${sessionScope.date})</li>
+			</ul>
 		</div>
+		<div class="col-md-10">
+
+			<div class="panel panel-primary" style="display:block;" data-val="list-1">
+				<!-- Default panel contents -->
+				<div class="panel-heading">新闻源采集情况(${sessionScope.date})</div>
+				<div class="panel-body">
+					<table id="media"></table>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" data-val="list-2">
+				<!-- Default panel contents -->
+				<div class="panel-heading">新闻源子分类采集情况(${sessionScope.date})</div>
+				<div class="panel-body">
+					<table id="mediacategory"></table>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" data-val="list-3">
+				<!-- Default panel contents -->
+				<div class="panel-heading">文本源采集情况(${sessionScope.date})</div>
+				<div class="panel-body">
+					<table id="mediaText"></table>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" data-val="list-4" >
+				<!-- Default panel contents -->
+				<div class="panel-heading">图集源采集情况(${sessionScope.date})</div>
+				<div class="panel-body">
+					<table id="mediaGallery"></table>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" data-val="list-5" >
+				<!-- Default panel contents -->
+				<div class="panel-heading">视频源采集情况(${sessionScope.date})</div>
+				<div class="panel-body">
+					<table id="mediaVideo"></table>
+				</div>
+			</div>
+			
+			<div class="panel panel-primary" data-val="list-6" >
+				<!-- Default panel contents -->
+				<div class="panel-heading">快讯采集情况(${sessionScope.date})</div>
+				<div class="panel-body">
+					<table id="mediaBreakingNews"></table>
+				</div>
+			</div>
+			
+
+			<div class="panel panel-primary" data-val="list-7" >
+				<!-- Default panel contents -->
+				<div class="panel-heading">新闻源未开启采集列表(${sessionScope.date})</div>
+				<div class="panel-body">
+					<table id="mediaopen"></table>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
+	
 
 	<script type="text/javascript">
 		$('#media').bootstrapTable({
@@ -160,6 +202,19 @@
 				title : '采集文章数'
 			} ]
 		});
+		
+		$('#mediaBreakingNews').bootstrapTable({
+			url : 'media?type=breakingnews',
+			striped : true, //是否显示行间隔色
+			columns : [ {
+				field : 'id',
+				title : '源子分类id'
+			}, {
+				field : 'total',
+				title : '采集快讯数'
+			} ]
+		});
+		
 
 		$('#mediaopen').bootstrapTable({
 			url : 'mediaopen',
