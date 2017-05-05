@@ -14,7 +14,7 @@
 	<!-- <task:annotation-driven scheduler="myScheduler" /> <task:scheduler 
 		id="myScheduler" pool-size="5"/> -->
 		
-	<!-- <context:property-placeholder  location="classpath:config/project.properties" ignore-unresolvable="true"/> -->
+	<context:property-placeholder  location="classpath:config/project.properties" ignore-unresolvable="true"/>
 
 	<!-- 使用 spring + quartz 申明式配置 -->
 	<!-- 配置Job的bean -->
@@ -46,7 +46,7 @@
 		</property>
 		<property name="cronExpression">
 			<!-- 每天9点执行 -->
-			<value>0 38 15 * * ?</value>
+			<value>0 16 9 * * ?</value>
 		</property>
 	</bean>
 
